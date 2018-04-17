@@ -58,7 +58,7 @@ function checkStock(id, quant) {
             } else {
                 var newQuantity = data[0].stock_quantity - quant;
                 updateProduct(id, newQuantity);
-                console.log("your total is $" + data[0].price * quant + ".00. Thank you for your order!");
+                console.log("Thank you for your purchase of " + data[0].product_name + ". Your total is $" + data[0].price * quant + ".00. Thank you for your order!");
             }
 
         }
