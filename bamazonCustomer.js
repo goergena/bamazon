@@ -40,23 +40,43 @@ inquirer.prompt([{
         }
     }
 ]).then(function (answer) {
-    placeOrder(answer.id, answer.quantity);
+    checkStock(answer.id, answer.quantity);
 
 });
 
 //1 check if we have enough.
 //2 opt out or complete update
 
-function placeOrder(id, quant) {
-    connection.query("SELECT item_id, product_name, price, stock_quantity WHERE ?", {
+function checkStock(id, quant) {
+    connection.query("SELECT item_id, product_name, price, stock_quantity FROM products WHERE ?", {
             item_id: id,
         },
         function (err, data) {
-            if (data.stock_quantity < quant) {
-                console.log("Insufficient quantity!")
+            if (data[0].stock_quantity < quant) {
+                console.log("Insufficient quantity!");
+                connection.end();
             } else {
-                console.log("your order can go through!")
+                var newQuantity = data[0].stock_quantity - quant;
+                updateProduct(id, newQuantity);
+                console.log("your total is $" + data[0].price * quant + ".00. Thank you for your order!");
             }
+
+        }
+    );
+};
+
+function updateProduct(id, quant) {
+    connection.query(
+        "UPDATE products SET ? WHERE ?", [{
+                stock_quantity: quant
+            },
+            {
+                item_id: id
+            }
+        ],
+        function (err, data) {
+            if (err) throw err;
+            connection.end();
         }
     );
 };
