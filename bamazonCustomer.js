@@ -16,7 +16,7 @@ function readProducts() {
         if (err) throw err;
         for (var prodIndex = 0; prodIndex < data.length; prodIndex++)
             console.log("ID: " + data[prodIndex].item_id + ".  " + data[prodIndex].product_name + "  $" + data[prodIndex].price + ".00  \n");
-    connection.end();
+   // connection.end();
         });
 };
 
@@ -44,7 +44,7 @@ inquirer.prompt([{
 });
 
 function checkStock(id, quant) {
-    connection.query("SELECT item_id, product_name, price, stock_quantity FROM products WHERE ?", {
+    connection.query("SELECT * FROM products WHERE ?", {
             item_id: id,
         },
         function (err, data) {
@@ -54,11 +54,10 @@ function checkStock(id, quant) {
             } else {
                 var newQuantity = data[0].stock_quantity - quant;
                 var totalPrice = data[0].price * quant;
-                var totalSales = data[0].product_sales += totalPrice;
+                var totalSales = data[0].product_sales + totalPrice;
                 updateProduct(id, newQuantity, totalSales);
                 console.log("The total for your purchase of " + data[0].product_name + " is $" + data[0].price * quant + ".00. Thank you for your order!");
             }
-
         }
     );
 };
@@ -66,14 +65,12 @@ function checkStock(id, quant) {
 function updateProduct(id, newQuant, sales) {
     connection.query(
         "UPDATE products SET ? WHERE ?", [{
-                stock_quantity: newQuant
+                stock_quantity: newQuant,
+                product_sales: sales
             },
             {
                 item_id: id
             },
-            {
-              product_sales: sales
-            }
         ],
         function (err, data) {
             if (err) throw err;
