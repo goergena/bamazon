@@ -7,7 +7,7 @@ var connection = mysql.createConnection({
 
     user: 'root',
     password: 'root',
-    resbase: 'bamazon_db'
+    database: 'bamazon_db'
 });
 
 var choicesArray = ['View Products for Sale', 'View Low Inventory', 'Add to Inventory', 'Add New Product'];
