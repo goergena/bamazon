@@ -14,11 +14,10 @@ function readProducts() {
     console.log("Finding all products...\n");
     connection.query("SELECT * FROM products", function (err, data) {
         if (err) throw err;
-        // Log all results of the SELECT statement
         for (var prodIndex = 0; prodIndex < data.length; prodIndex++)
             console.log("ID: " + data[prodIndex].item_id + ".  " + data[prodIndex].product_name + "  $" + data[prodIndex].price + ".00  \n");
-        //connection.end();
-    });
+    connection.end();
+        });
 };
 
 readProducts();
@@ -44,9 +43,6 @@ inquirer.prompt([{
 
 });
 
-//1 check if we have enough.
-//2 opt out or complete update
-
 function checkStock(id, quant) {
     connection.query("SELECT item_id, product_name, price, stock_quantity FROM products WHERE ?", {
             item_id: id,
@@ -57,21 +53,26 @@ function checkStock(id, quant) {
                 connection.end();
             } else {
                 var newQuantity = data[0].stock_quantity - quant;
-                updateProduct(id, newQuantity);
-                console.log("Thank you for your purchase of " + data[0].product_name + ". Your total is $" + data[0].price * quant + ".00. Thank you for your order!");
+                var totalPrice = data[0].price * quant;
+                var totalSales = data[0].product_sales += totalPrice;
+                updateProduct(id, newQuantity, totalSales);
+                console.log("The total for your purchase of " + data[0].product_name + " is $" + data[0].price * quant + ".00. Thank you for your order!");
             }
 
         }
     );
 };
 
-function updateProduct(id, quant) {
+function updateProduct(id, newQuant, sales) {
     connection.query(
         "UPDATE products SET ? WHERE ?", [{
-                stock_quantity: quant
+                stock_quantity: newQuant
             },
             {
                 item_id: id
+            },
+            {
+              product_sales: sales
             }
         ],
         function (err, data) {
