@@ -1,5 +1,10 @@
 var inquirer = require("inquirer");
 var mysql = require("mysql");
+const cTable = require('console.table');
+
+
+// prints
+
 
 var connection = mysql.createConnection({
     host: 'localhost',
@@ -10,6 +15,28 @@ var connection = mysql.createConnection({
     database: 'bamazon_db'
 });
 
+connection.query("SELECT departments.department_ID, departments.department_name, departments.overhead_costs,  " +
+ "SUM(products.product_sales) AS 'Dept_sales', SUM('Dept_sales' - departments.overhead_costs) AS 'Dept_profit'  " + 
+ "FROM products INNER JOIN departments " +
+  "ON (departments.department_name = products.department_name) GROUP BY departments.department_name", function(err, res){
+    if (err) throw (err);
+    console.table('Product Sales by Department', res);
+    connection.end();
+}); 
+/*
+connection.query("SELECT SUM(products.product_sales) AS 'Dept_Sales',  FROM products " + 
+"UNION SELECT department_name, department_ID,  SUM('Dept_Sales' - overhead_costs) AS 'Dept_profit' FROM departments " +
+" GROUP BY departments.department_ID", function(err, res){
+    if (err) throw (err);
+    console.table('Product Sales by Department', res);
+    connection.end();
+}); 
+
+
+//"INNER JOIN departments ON (departments.department_name = products.department_name)" +
+
+
+/*
 inquirer.prompt([{
     name: 'action',
     type: 'list',
@@ -23,6 +50,8 @@ inquirer.prompt([{
     }
 
 });
+
+*/
 
 function viewSales() {
     console.log('you clicked view sales!');
