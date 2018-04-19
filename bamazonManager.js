@@ -37,10 +37,10 @@ var methods = {
         connection.query("SELECT * FROM products WHERE stock_quantity <5", function (err, res) {
             if (err) throw err;
             // Log all results of the SELECT statement
-            if (!res === []) {
-                console.log(res);
-            } else {
+            if (res === []) {
                 console.log("There are no products where inventory is below 5.")
+            } else {
+                console.log(res);
             }
 
             connection.end();
