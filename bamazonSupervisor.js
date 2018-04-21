@@ -2,10 +2,6 @@ var inquirer = require("inquirer");
 var mysql = require("mysql");
 const cTable = require('console.table');
 
-
-// prints
-
-
 var connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
@@ -14,44 +10,6 @@ var connection = mysql.createConnection({
     password: 'root',
     database: 'bamazon_db'
 });
-
-/*
-connection.query("SELECT departments.department_ID, departments.department_name, departments.overhead_costs,  " +
- "SUM(products.product_sales) AS 'Dept_sales', SUM('Dept_sales' - departments.overhead_costs) AS 'Dept_profit'  " + 
- "FROM products INNER JOIN departments " +
-  "ON (departments.department_name = products.department_name) GROUP BY departments.department_name", function(err, res){
-    if (err) throw (err);
-    console.table('Product Sales by Department', res);
-    connection.end();
-}); 
-
-connection.query("SELECT departments.department_ID, departments.department_name, departments.overhead_costs,  " +
- "SUM(products.product_sales) AS 'Dept_sales', ('Dept_sales' - SUM(departments.overhead_costs)) AS 'Dept_profit'  " + 
- "FROM products RIGHT JOIN departments " +
-  "ON (departments.department_name = products.department_name) GROUP BY departments.department_name", function(err, res){
-    if (err) throw (err);
-    console.table('Product Sales by Department', res);
-    connection.end();
-}); 
-*/
-
-
-
-//one deptsalesis outside and departments.overheadcosts is wrapped in sum
-
-/*
-connection.query("SELECT SUM(products.product_sales) AS 'Dept_Sales',  FROM products " + 
-"UNION SELECT department_name, department_ID,  SUM('Dept_Sales' - overhead_costs) AS 'Dept_profit' FROM departments " +
-" GROUP BY departments.department_ID", function(err, res){
-    if (err) throw (err);
-    console.table('Product Sales by Department', res);
-    connection.end();
-}); 
-
-
-//"INNER JOIN departments ON (departments.department_name = products.department_name)" +
-
-*/
 
 inquirer.prompt([{
     name: 'action',
@@ -64,13 +22,10 @@ inquirer.prompt([{
     } else {
         createDept();
     }
-
 });
 
 
-
 function viewSales() {
-    console.log('you clicked view sales!');
     connection.query("SELECT departments.department_ID, departments.department_name, departments.overhead_costs,  " +
         "SUM(products.product_sales) AS 'Dept_sales', (SUM(products.product_sales) - (departments.overhead_costs)) AS 'Dept_profit'  " +
         "FROM departments LEFT JOIN products " +
@@ -80,7 +35,6 @@ function viewSales() {
             console.table('Product Sales by Department', res);
             connection.end();
         });
-
 };
 
 function createDept() {
@@ -97,7 +51,6 @@ function createDept() {
             }
         },
 
-
     ]).then(function (answer) {
 
         connection.query(
@@ -107,7 +60,6 @@ function createDept() {
             },
             function (err, res) {
                 if (err) throw err;
-                //console.log(res);
                 console.log(res.affectedRows + " department added!\n");
                 connection.end();
             }
