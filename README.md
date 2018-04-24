@@ -3,7 +3,7 @@
 
 ## Manager userflow
 ![Image of bamazonManager.js userflow]
-(images/Manager-tool-list.png)
+(bamazon/images/Manager-tool-list.png)
 
 
 ## Customer page
