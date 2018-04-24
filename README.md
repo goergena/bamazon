@@ -35,12 +35,13 @@ We can return to "view products for sale" and see that the inventory has increas
 
 ### Option 4: Add New Product
 
-We can return to "view products for sale" and see that the inventory has increased.
-<img src="https://github.com/goergena/bamazon/raw/master/images/manager-after-add-to-inventory.png" alt="bamazonManager.js view products for sale- inventory for selected product has increased ">
+When this option is selected, the manager is given a prompt that goes through all the necessary steps to add a new product. 
+<img src="https://github.com/goergena/bamazon/raw/master/images/manager-add-new-product.png" alt="bamazonManager.js prompts to add new product ">
 
-We can return to "view products for sale" and see that the inventory has increased.
+
+We can return to "view products for sale" and see that the new product has been added.
 <img src="https://github.com/goergena/bamazon/raw/master/images/manager-after-product-added.png" alt="bamazonManager.js view products for sale- new product is displayed ">
-
+The item_id increments automatically.
 
 ## Customer userflow
 
