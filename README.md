@@ -44,7 +44,23 @@ We can return to "view products for sale" and see that the new product has been 
 The item_id increments automatically.
 
 ## Customer userflow
+when the user opens the command line and enters "node bamazonCustomer.js", s/he is given a list of the products, their IDs, and their prices. The customer is prompted to enter the ID number of the item s/he would like to purchase
+<img src="https://github.com/goergena/bamazon/raw/master/images/Customer-flow1.png" alt="bamazonCustomer.js list of items and prompt enter ID# of item you would like to purchase ">
 
+Then, the customer is prompted how many of the item s/he would like to buy.
+<img src="https://github.com/goergena/bamazon/raw/master/images/Customer-flow2.png" alt="bamazonCustomer.js prompt- how many items ">
+
+<img src="https://github.com/goergena/bamazon/raw/master/images/customer-flow-insufficient-quantity.png" alt="bamazonCustomer.js message insufficient quantity">
+
+In this example, the customer tried to buy 42 pairs of tap shoes, but there are only 40 pairs of tap shoes in stock. S/he is told that there is an insufficient quantity, and the sale cannot go through.
+
+
+When a sale can go through, the customer is told their total price.
+<img src="https://github.com/goergena/bamazon/raw/master/images/customer-flow-sale.png" alt="bamazonCustomer.js purchase is successful">
+
+After a sale goes through, the stock decreases accordingly. We can see this on the manager page:
+<img src="https://github.com/goergena/bamazon/raw/master/images/customer-inventory-updates.png" alt="bamazonManager.js view products for sale- inventory for selected product has decreased">
+There are now only 23 pairs of tap shoes in stock after the purchase has gone through.
 
 ## Supervisor userflow
 
