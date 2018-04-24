@@ -1,15 +1,15 @@
 # bamazon
 
 
-##Manager userflow
+## Manager userflow
 ![Image of bamazonManager.js userflow]
 (images/Manager-tool-list.png)
 
 
-##Customer page
+## Customer page
 
 
-##Supervisor page
+## Supervisor page
 
 
 
